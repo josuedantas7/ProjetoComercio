@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://projeto-comercio-git-main-josue-dantas-projects.vercel.app'
 })
