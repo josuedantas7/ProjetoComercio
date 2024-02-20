@@ -11,31 +11,30 @@ const url = process.env.HOST_URL
 const TableListProducts = async () => {
 
 
-    const allProducts: ProductProps[] = await fetch(`${url}/api/product`, {
-        method: 'GET', // ou 'POST' ou outro método HTTP, se necessário
-        next: {
-            tags: ['get-products']
-        },
-        cache: 'no-cache',
-        headers: {
-            'Content-Type': 'application/json',
-            // Adicione quaisquer outros cabeçalhos necessários aqui
-        },
-    }).then(response => response.json());
+    // const allProducts: ProductProps[] = await fetch(`${url}/api/product`, {
+    //     method: 'GET',
+    //     next: {
+    //         tags: ['get-products']
+    //     },
+    //     cache: 'no-cache',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    // }).then(response => response.json());
 
-    // console.log(response)
+    // // console.log(response)
 
-    // const allProducts : ProductProps[] = await response.json()
+    // // const allProducts : ProductProps[] = await response.json()
 
-    console.log(allProducts)
+    // console.log(allProducts)
 
-    function formatNumber(number : number){
-        return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
-    }
+    // function formatNumber(number : number){
+    //     return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
+    // }
 
   return (
     <div className='w-full flex flex-col overflow-y-auto max-h-[500px]'>
-            {allProducts && allProducts.length > 0 && (
+            {/* {allProducts && allProducts.length > 0 && (
                 <div className='flex justify-between font-bold pr-4 pl-3'>
                     <p className='w-1/3'>Nome:</p>
                     <p className='w-1/3 text-center'>Preço:</p>
@@ -50,7 +49,7 @@ const TableListProducts = async () => {
                         <p className='w-1/3 text-end pr-12'>{product.qtd} Un</p>
                     </Link>
                 ))}
-            </div>
+            </div> */}
     </div>
   )
 }
