@@ -6,10 +6,12 @@ import next from 'next'
 import Link from 'next/link'
 import React, { cache, useEffect, useState } from 'react'
 
+const url = process.env.HOST_URL
+
 const TableListProducts = async () => {
 
 
-    const allProducts: ProductProps[] = await fetch('http://projeto-comercio-git-main-josue-dantas-projects.vercel.app/api/product', {
+    const allProducts: ProductProps[] = await fetch(`${url}/api/product`, {
         method: 'GET', // ou 'POST' ou outro método HTTP, se necessário
         next: {
             tags: ['get-products']
