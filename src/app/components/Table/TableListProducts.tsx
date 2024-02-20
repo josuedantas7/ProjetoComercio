@@ -9,9 +9,17 @@ import React, { cache, useEffect, useState } from 'react'
 const TableListProducts = async () => {
 
 
-    const allProducts : ProductProps[] = await fetch('http://projeto-comercio-git-main-josue-dantas-projects.vercel.app/api/product', {cache: 'no-cache', next: {
-        tags: ['get-products']
-    }},).then(response => response.json())
+    const allProducts: ProductProps[] = await fetch('http://projeto-comercio-git-main-josue-dantas-projects.vercel.app/api/product', {
+        method: 'GET', // ou 'POST' ou outro método HTTP, se necessário
+        next: {
+            tags: ['get-products']
+        },
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            // Adicione quaisquer outros cabeçalhos necessários aqui
+        },
+    }).then(response => response.json());
 
     // console.log(response)
 
