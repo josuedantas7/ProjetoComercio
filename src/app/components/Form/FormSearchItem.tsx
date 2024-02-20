@@ -5,6 +5,8 @@ import { ProductProps } from '@/app/Interfaces/allInterfaces'
 import { api } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import InputWithLabel from '../Input/InputWithLabel'
+import { Label } from '@radix-ui/react-label'
+import { Input } from '@/components/ui/input'
 
 
 
@@ -17,6 +19,7 @@ const FormSearchItem = () => {
     const [qtd, setQtd] = useState<number>(1)
     const [codigo, setCodigo] = useState<string>('')
     const [listProducts, setListProducts] = useState<ExtendedProductProps[]>([])
+    const [valorTotal, setValorTotal] = useState<number>(0)
 
     useEffect(() => {
         if (isNaN(qtd)) {
@@ -57,9 +60,19 @@ const FormSearchItem = () => {
                 console.log(response)
             }
             console.log('Venda finalizada com sucesso')
+
+            const response = await api.post('/api/sale', {
+                Products: listProducts,
+                total: valorTotal
+            })
+
+            console.log(response, 'testando sales')
+
+            console.log('Adicionado ao banco de dados com sucesso')
+
             setListProducts([])
-        } catch{
-            console.log('Erro ao finalizar venda')
+        } catch(err){
+            console.log('Erro ao finalizar venda', err)
         }
     }
 
@@ -68,12 +81,26 @@ const FormSearchItem = () => {
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
     }
 
+    useEffect(() => {
+        let total = 0
+        for (let product of listProducts) {
+            total += product.price * product.qtdVendida
+        }
+        setValorTotal(total)
+    },[listProducts])
+
   return (
     <>
         <div className='flex flex-col gap-3'>
             <form className='flex flex-col gap-3' onSubmit={handleGetItem}>
-                <InputWithLabelNumber onChange={setQtd} label='Quantidade de itens' type='number' placeholder='Digite a quantidade do produto' />
-                <InputWithLabel value={codigo} onChange={setCodigo} label='Código do produto' type='number' placeholder='Digite o código do produto' />
+                <div className="w-full">
+                    <Label htmlFor="qtd">Quantidade de itens</Label>
+                    <Input onChange={(e) => setQtd(parseFloat(e.target.value))} type='number' id='qtd' placeholder='Digite a quantidade do produto' />
+                </div>
+                <div className="w-full">
+                    <Label htmlFor="codigo">Código do produto</Label>
+                    <Input value={codigo} onChange={(e) => setCodigo(e.target.value)} type='text' id='codigo' placeholder='Digite o código do produto' />
+                </div>
                 <button type='submit' className='hidden'></button>
             </form>
             {listProducts.length > 0 && (

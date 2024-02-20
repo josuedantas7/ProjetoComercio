@@ -5,14 +5,15 @@ interface InputWithLabelProps{
     label: string;
     type: string;
     placeholder?: string;
-    onChange: (value: number) => void;
+    onChange?: (value: number) => void;
+    name?: string;
 }
 
-export default function InputWithLabelNumber({label, type, placeholder, onChange} : InputWithLabelProps) {
+export default function InputWithLabelNumber({name,label, type, placeholder, onChange} : InputWithLabelProps) {
   return (
     <div className="w-full">
       <Label htmlFor="email">{label}</Label>
-      <Input onChange={(e) => onChange(parseFloat(e.target.value))} type={type} id={label} placeholder={placeholder || label} />
+      <Input name={name} type={type} id={label} placeholder={placeholder || label} />
     </div>
   )
 }

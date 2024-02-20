@@ -1,27 +1,23 @@
-'use client'
 import { ProductProps } from '@/app/Interfaces/allInterfaces'
 import { api } from '@/lib/api'
-import React, { useEffect, useState } from 'react'
+import prisma from '@/lib/prisma'
+import axios from 'axios'
+import next from 'next'
+import React, { cache, useEffect, useState } from 'react'
 
-const TableListProducts = () => {
+const TableListProducts = async () => {
 
 
-    const [allProducts, setAllProducts] = useState<ProductProps[] | null>([])
+    const allProducts : ProductProps[] = await fetch('http://localhost:3000/api/product', {cache: 'no-cache', next: {
+        tags: ['get-products']
+    }},).then(response => response.json())
 
-    useEffect(() => {
-        async function getProducts(){
-            try {
-                const response = await api.get('/api/product')
-                setAllProducts(response.data)
-                console.log(response.data)
-            }catch{
-                console.log('Erro ao buscar produtos')
-            }
-        }
-        getProducts()
-    },[])
+    // console.log(response)
 
-    
+    // const allProducts : ProductProps[] = await response.json()
+
+    console.log(allProducts)
+
     function formatNumber(number : number){
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
     }
