@@ -16,8 +16,6 @@ const TableListProducts = async () => {
         },
     }).then(response => response.json());
 
-    console.log(allProducts)
-
     function formatNumber(number : number){
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
     }

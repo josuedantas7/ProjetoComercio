@@ -35,7 +35,6 @@ const FormEditProduct = ({product} : {product : ProductProps}) => {
                     codigoDeBarras: codigoDeBarras ? codigoDeBarras?.toString() : product?.codigoDeBarras
                 }
             })
-            console.log('Produto cadastrado com sucesso', response)
             revalidateTag('get-products')
         } catch (err) {
             console.log('Erro ao cadastrar produto', err)

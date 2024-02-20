@@ -13,8 +13,6 @@ const ProductId = async ({params} : { params : { params: string } }) => {
         }
     })
 
-    console.log(productId)
-
     return (
         <div>
                 <h1 className="text-2xl text-center font-bold mt-12">Edita produto : {productId?.name}</h1>

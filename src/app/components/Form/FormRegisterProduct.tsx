@@ -28,9 +28,7 @@ const FormRegisterProduct = async () => {
                     codigoDeBarras: codigoDeBarras as string
                 }
             })
-            console.log(response)
             revalidateTag('get-products')
-            console.log('Produto cadastrado com sucesso')
         } catch (err) {
             console.log('Erro ao cadastrar produto', err)
         }

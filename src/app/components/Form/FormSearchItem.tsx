@@ -41,8 +41,6 @@ const FormSearchItem = () => {
                 ...response.data,
                 qtdVendida: qtd
             }])
-            console.log('item buscado com sucesso')
-            console.log(listProducts)
             setCodigo('')
         } catch{
             console.log('Erro ao buscar produto')
@@ -57,18 +55,12 @@ const FormSearchItem = () => {
                     id: product.id,
                     qtdVendida: product.qtdVendida
                 })
-                console.log(response)
             }
-            console.log('Venda finalizada com sucesso')
 
             const response = await api.post('/api/sale', {
                 Products: listProducts,
                 total: valorTotal
             })
-
-            console.log(response, 'testando sales')
-
-            console.log('Adicionado ao banco de dados com sucesso')
 
             setListProducts([])
         } catch(err){
