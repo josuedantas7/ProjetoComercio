@@ -3,6 +3,7 @@ import { api } from '@/lib/api'
 import prisma from '@/lib/prisma'
 import axios from 'axios'
 import next from 'next'
+import Link from 'next/link'
 import React, { cache, useEffect, useState } from 'react'
 
 const TableListProducts = async () => {
@@ -33,11 +34,11 @@ const TableListProducts = async () => {
             )}
             <div className='overflow-y-auto max-h-[500px] flex flex-col gap-2'>
                 {allProducts && allProducts.map((product, index) => (
-                    <div className='flex justify-between border rounded-md px-3 py-1' key={index}>
+                    <Link href={`/produto/${product.id}`} className='flex justify-between border rounded-md px-3 py-1' key={index}>
                         <p className='w-1/3'>{product.name}</p>
                         <p className='w-1/3 text-center'>{formatNumber(product.price)}</p>
                         <p className='w-1/3 text-end pr-12'>{product.qtd} Un</p>
-                    </div>
+                    </Link>
                 ))}
             </div>
     </div>

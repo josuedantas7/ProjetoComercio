@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 interface InputWithLabelProps{
     label: string;
     type: string;
-    placeholder?: string;
+    placeholder?: string | number;
     onChange?: (value: number) => void;
     name?: string;
 }
@@ -13,7 +13,7 @@ export default function InputWithLabelNumber({name,label, type, placeholder, onC
   return (
     <div className="w-full">
       <Label htmlFor="email">{label}</Label>
-      <Input name={name} type={type} id={label} placeholder={placeholder || label} />
+      <Input name={name} type={type} id={label} placeholder={placeholder?.toString() || label} />
     </div>
   )
 }
