@@ -1,40 +1,30 @@
 import { ProductProps } from '@/app/Interfaces/allInterfaces'
-import { api } from '@/lib/api'
-import prisma from '@/lib/prisma'
-import axios from 'axios'
-import next from 'next'
 import Link from 'next/link'
-import React, { cache, useEffect, useState } from 'react'
-
-const url = process.env.HOST_URL
+import React from 'react'
 
 const TableListProducts = async () => {
 
 
-    // const allProducts: ProductProps[] = await fetch(`${url}/api/product`, {
-    //     method: 'GET',
-    //     next: {
-    //         tags: ['get-products']
-    //     },
-    //     cache: 'no-cache',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // }).then(response => response.json());
+    const allProducts: ProductProps[] = await fetch(`${process.env.HOST_URL}/api/product`, {
+        method: 'GET',
+        next: {
+            tags: ['get-products']
+        },
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json());
 
-    // // console.log(response)
+    console.log(allProducts)
 
-    // // const allProducts : ProductProps[] = await response.json()
-
-    // console.log(allProducts)
-
-    // function formatNumber(number : number){
-    //     return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
-    // }
+    function formatNumber(number : number){
+        return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
+    }
 
   return (
     <div className='w-full flex flex-col overflow-y-auto max-h-[500px]'>
-            {/* {allProducts && allProducts.length > 0 && (
+            {allProducts && allProducts.length > 0 && (
                 <div className='flex justify-between font-bold pr-4 pl-3'>
                     <p className='w-1/3'>Nome:</p>
                     <p className='w-1/3 text-center'>Preço:</p>
@@ -49,7 +39,7 @@ const TableListProducts = async () => {
                         <p className='w-1/3 text-end pr-12'>{product.qtd} Un</p>
                     </Link>
                 ))}
-            </div> */}
+            </div>
     </div>
   )
 }
