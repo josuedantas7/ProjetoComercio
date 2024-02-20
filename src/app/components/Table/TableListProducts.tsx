@@ -1,24 +1,12 @@
 import { ProductProps } from '@/app/Interfaces/allInterfaces'
+import { api } from '@/lib/api'
 import Link from 'next/link'
-import React from 'react'
+import React, { cache } from 'react'
+const url = process.env.HOST_URL
 
 const TableListProducts = async () => {
 
-
-    const allProducts : ProductProps[] = await fetch(`${process.env.HOST_URL}/api/product`, {
-        method: 'GET',
-        next: {
-            tags: ['get-products']
-        },
-        cache: 'no-cache',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }).then(response => response.json())
-
-    // const allProducts : ProductProps[] = await response.json()
-
-    console.log(allProducts)
+    const allProducts : ProductProps[] = await api.get('/api/product').then(response => response.data)
 
     function formatNumber(number : number){
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
