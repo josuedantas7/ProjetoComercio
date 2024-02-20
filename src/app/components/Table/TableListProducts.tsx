@@ -1,13 +1,21 @@
+'use client'
 import { ProductProps } from '@/app/Interfaces/allInterfaces'
 import { api } from '@/lib/api'
 import Link from 'next/link'
-import React, { cache } from 'react'
-const url = process.env.HOST_URL
+import React, { cache, useEffect, useState } from 'react'
 
-const TableListProducts = async () => {
+const TableListProducts = () => {
 
-    const allProducts : ProductProps[] = await api.get('/api/product').then(response => response.data)
+    const [allProducts, setAllProducts] = useState<ProductProps[] | null>()
 
+    useEffect(() => {
+        async function getAllProducts(){
+            const response = await api.get('/api/product')
+            setAllProducts(response.data)
+        }
+        getAllProducts()
+    },[])
+    
     function formatNumber(number : number){
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
     }
