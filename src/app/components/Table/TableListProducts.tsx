@@ -5,7 +5,7 @@ import React from 'react'
 const TableListProducts = async () => {
 
 
-    const allProducts: ProductProps[] = await fetch(`${process.env.HOST_URL}/api/product`, {
+    const allProducts : ProductProps[] = await fetch(`${process.env.HOST_URL}/api/product`, {
         method: 'GET',
         next: {
             tags: ['get-products']
@@ -14,7 +14,11 @@ const TableListProducts = async () => {
         headers: {
             'Content-Type': 'application/json',
         },
-    }).then(response => response.json());
+    }).then(response => response.json())
+
+    // const allProducts : ProductProps[] = await response.json()
+
+    console.log(allProducts)
 
     function formatNumber(number : number){
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(number)
