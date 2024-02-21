@@ -86,3 +86,26 @@ export async function PUT(request: Request){
     }
 
 }
+
+export async function DELETE(request: Request){
+
+    const { searchParams } = new URL(request.url);
+
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ error: "Missing fields" }, { status: 400 })
+    }
+
+    try {
+        const response = await prisma.product.delete({
+            where: {
+                id: id
+            }
+        })
+        return NextResponse.json(response, {status: 200})
+    }catch{
+        return NextResponse.json({ error: "Error deleting product" }, { status: 500 })
+    }
+
+}
