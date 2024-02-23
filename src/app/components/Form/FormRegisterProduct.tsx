@@ -4,6 +4,7 @@ import InputWithLabelNumber from '../Input/InputWithLabelNumber'
 import { Button } from '@/components/ui/button'
 import { revalidateTag } from 'next/cache'
 import prisma from '@/lib/prisma'
+import ButtonSubmitRegisterProduct from '../Button/ButtonSubmitRegisterProduct'
 
 const FormRegisterProduct = async () => {
 
@@ -40,7 +41,7 @@ const FormRegisterProduct = async () => {
         <InputWithLabelNumber name='price' label='Preço do produto' type='number' placeholder='Digite o preço do produto' />
         <InputWithLabelNumber name='qtd' label='Quantidade de itens' type='number' placeholder='Digite a quantidade do produto' />
         <InputWithLabel name='codBarras' label='Código de barras do produto' type='text' placeholder='Digite o código do produto' />
-        <Button className='w-full mt-3' type='submit'>Cadastrar produto</Button>
+        <ButtonSubmitRegisterProduct/>
     </form>
   )
 }

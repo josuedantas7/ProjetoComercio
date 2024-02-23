@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import InputWithLabel from '../Input/InputWithLabel'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '@/components/ui/input'
+import { revalidateTag } from 'next/cache'
 
 
 
@@ -56,11 +57,13 @@ const FormSearchItem = () => {
                     qtdVendida: product.qtdVendida
                 })
             }
-
+            
             const response = await api.post('/api/sale', {
                 Products: listProducts,
                 total: valorTotal
-            },)
+            })
+
+            console.log(response)
 
             setListProducts([])
         } catch(err){
