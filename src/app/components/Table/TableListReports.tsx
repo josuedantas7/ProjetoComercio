@@ -1,13 +1,10 @@
 import prisma from '@/lib/prisma'
+import Link from 'next/link'
 import React from 'react'
 
 const TableListReports = async () => {
 
-    const reports = await prisma.sale.findMany({
-        include: {
-            Products: true
-        }
-    })
+    const reports = await prisma.sale.findMany()
 
     console.log(reports)
 
@@ -36,11 +33,11 @@ const TableListReports = async () => {
                 </div>
                 <div className='overflow-y-auto max-h-[500px] flex flex-col gap-2'>
                     {reports.map((report,index) => (
-                        <div className='flex justify-between border rounded-md px-3 py-1' key={index}>
+                        <Link href={`/relatorio/${report.id}`} className='flex justify-between border rounded-md px-3 py-1' key={index}>
                             <h1 className='w-1/3'>{index + 1}</h1>
                             <p className='w-1/3 text-center'>{formatPrice(report.total)}</p>
                             <p className='w-1/3 text-end'>{formatDate(report.createdAt)}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
                 <div className='w-full text-end mt-8'>
