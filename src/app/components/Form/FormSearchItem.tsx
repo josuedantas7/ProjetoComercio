@@ -113,6 +113,11 @@ const FormSearchItem = () => {
                     </div>
                 ))}
             </div>
+            {listProducts.length > 0 && (
+                <div>
+                    <p className='font-bold text-end mt-2'>Valor total: {formatNumber(valorTotal)}</p>
+                </div>
+            )}
         </div>
         {listProducts.length > 0 && (
             <Button className='w-full' onClick={handleUpdateDataBase}>Finalizar compras</Button>

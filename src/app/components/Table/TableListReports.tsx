@@ -27,20 +27,29 @@ const TableListReports = async () => {
 
   return (
     <div className='w-full flex flex-col overflow-y-auto max-h-[500px]'>
-        <div className='flex justify-between font-bold pr-4 pl-3'>
-            <p className='w-1/3'>ID</p>
-            <p className='w-1/3 text-center'>Valor Total</p>
-            <p className='w-1/3 text-end'>Data de compra</p>
-        </div>
-        <div className='overflow-y-auto max-h-[500px] flex flex-col gap-2'>
-            {reports.map((report,index) => (
-                <div className='flex justify-between border rounded-md px-3 py-1' key={index}>
-                    <h1 className='w-1/3'>{index + 1}</h1>
-                    <p className='w-1/3 text-center'>{formatPrice(report.total)}</p>
-                    <p className='w-1/3 text-end'>{formatDate(report.createdAt)}</p>
+        {reports.length > 0 ? (
+            <>
+                <div className='flex justify-between font-bold pr-4 pl-3'>
+                    <p className='w-1/3'>ID</p>
+                    <p className='w-1/3 text-center'>Valor Total</p>
+                    <p className='w-1/3 text-end'>Data de compra</p>
                 </div>
-            ))}
-        </div>
+                <div className='overflow-y-auto max-h-[500px] flex flex-col gap-2'>
+                    {reports.map((report,index) => (
+                        <div className='flex justify-between border rounded-md px-3 py-1' key={index}>
+                            <h1 className='w-1/3'>{index + 1}</h1>
+                            <p className='w-1/3 text-center'>{formatPrice(report.total)}</p>
+                            <p className='w-1/3 text-end'>{formatDate(report.createdAt)}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className='w-full text-end mt-8'>
+                        <p className='font-bold'>Valor total: {formatPrice(reports.reduce((acc, report) => acc + report.total, 0))}</p>
+                </div>
+            </>
+        ): (
+            <h1>Não há relatórios</h1>
+        )}
     </div>
   )
 }
