@@ -18,14 +18,12 @@ model Product {
   price          Float
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  Sale           Sale?    @relation(fields: [saleId], references: [id])
-  saleId         String?  @db.ObjectId
 }
 
 model Sale {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  Products  Product[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  qtdItens  Int
   total     Float
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

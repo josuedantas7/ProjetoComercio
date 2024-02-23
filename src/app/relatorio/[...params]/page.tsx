@@ -8,10 +8,14 @@ const RelatorioId = async ({params} : { params : { params: string } }) => {
     const reportId = params.params[0]
 
 
+    if (!reportId) {
+        return <h1>Erro ao buscar relatório</h1>
+    }
+
     const report = await prisma.sale.findUnique({
         where: {
             id: reportId
-        },
+        }
     })
 
     console.log(report)

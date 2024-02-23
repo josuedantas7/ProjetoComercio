@@ -60,7 +60,7 @@ const FormSearchItem = () => {
             const response = await api.post('/api/sale', {
                 Products: listProducts,
                 total: valorTotal
-            })
+            },)
 
             setListProducts([])
         } catch(err){

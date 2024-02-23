@@ -20,12 +20,7 @@ export async function POST(request: Request){
       const sale = await prisma.sale.create({
         data: {
           total,
-          Products: {
-            connect: Products.map((product) => ({ id: product.id })),
-          },
-        },
-        include: {
-            Products: true,
+          qtdItens: Products.length,
         }
       });
   
@@ -34,4 +29,19 @@ export async function POST(request: Request){
       console.error('Error:', error);
       return NextResponse.json({ message: 'Error saving sale' }, { status: 500 });
     }
-  }
+}
+
+export async function GET(){
+    try {
+      const sales = await prisma.sale.findMany({
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+  
+      return NextResponse.json(sales, { status: 200 });
+    } catch (error) {
+      console.error('Error:', error);
+      return NextResponse.json({ message: 'Error fetching sales' }, { status: 500 });
+    }
+}
