@@ -10,6 +10,7 @@ export default function Header() {
     const items = [
         { label: 'Produtos', icon: 'pi pi-home', command: () => router.push('/') },
         { label: 'Compras', icon: 'pi pi-chart-line', command: () => router.push('/compras')  },
+        { label: 'Relatórios', icon: 'pi pi-book', command: () => router.push('/relatorio')  },
     ];
 
     return (
