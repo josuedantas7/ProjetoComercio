@@ -1,25 +1,25 @@
-import { api } from '@/lib/api'
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
-import React, { ReactNode } from 'react'
-
-interface ReportsProps{
-    id: string;
-    total: number;
-    createdAt: Date
-    qtdItens: number;
-}
+import React from 'react'
+import ButtonDeleteAllReports from '../Button/ButtonDeleteAllReports';
+import { ReportsProps } from '@/app/Interfaces/allInterfaces';
 
 const TableListReports = async () => {
 
     const reports : ReportsProps[] = await prisma.sale.findMany({
         orderBy: {
             createdAt: 'asc'
+        },
+        include: {
+            saleProducts: {
+                include: {
+                    product: true,
+                },
+            }
         }
-    
     })
 
-    console.log(reports)
+     reports.map(report => console.log(report.saleProducts))
 
     function formatDate(date: Date) {
         return date.toLocaleDateString('pt-BR')
@@ -56,6 +56,9 @@ const TableListReports = async () => {
         ): (
             <h1>Não há relatórios</h1>
         )}
+        <div className='w-full flex justify-center'>
+            <ButtonDeleteAllReports/>
+        </div>
     </div>
   )
 }

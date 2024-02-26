@@ -9,7 +9,7 @@ const ButtonReloadPage = () => {
   return <AiOutlineLoading3Quarters onClick={() => {
     setLoading(true)
     location.reload()
-  }} size={20} className={`absolute right-0 w-[30px] h-[30px] ${loading && 'animate-spin'}`} />
+  }} size={20} className={`absolute cursor-pointer right-0 w-[30px] h-[30px] ${loading && 'animate-spin'}`} />
 }
 
 export default ButtonReloadPage
