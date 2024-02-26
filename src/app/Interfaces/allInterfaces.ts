@@ -1,7 +1,27 @@
 export interface ProductProps{
-    id?: number;
+    id: string;
     codigoDeBarras: string;
-    price: number;
     name: string;
+    price: number;
     qtd: number;
+    createdAt: Date; 
+    updatedAt: Date;
+}
+
+
+export interface ReportsProps{
+    id: string;
+    total: number;
+    qtdItens: number;
+    createdAt: Date;
+    saleProducts: SaleProductsProps[];
+}
+
+export interface SaleProductsProps{
+    id: string;
+    saleId: string;
+    productId: string;
+    qtd: number;
+    createAt?: Date;
+    product: ProductProps;
 }
