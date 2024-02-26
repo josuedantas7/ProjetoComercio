@@ -1,6 +1,5 @@
-import ProductId from '@/app/produto/[...params]/page'
+import TableListProductsBySale from '@/app/components/Table/TableListProductsBySale'
 import prisma from '@/lib/prisma'
-import { format } from 'path'
 import React from 'react'
 
 const RelatorioId = async ({params} : { params : { params: string } }) => {
@@ -12,14 +11,6 @@ const RelatorioId = async ({params} : { params : { params: string } }) => {
         return <h1>Erro ao buscar relatório</h1>
     }
 
-    const report = await prisma.sale.findUnique({
-        where: {
-            id: reportId
-        }
-    })
-
-    console.log(report)
-
     function formatDate(date: Date) {
         return date.toLocaleDateString('pt-BR')
     }
@@ -30,7 +21,14 @@ const RelatorioId = async ({params} : { params : { params: string } }) => {
 
   return (
     <div>
-        <h1 className='text-center text-2xl text-gray-900 font-bold'>Relatório: {report?.id}</h1>
+        <h1 className='text-center text-2xl text-gray-900 font-bold'>Relatório</h1>
+        <div className="mt-8 w-[900px] max-[960px]:w-[90%] mx-auto border rounded-lg p-5 shadow-lg border-zinc-500">
+            {
+                reportId && (
+                    <TableListProductsBySale reportId={reportId} />
+                )
+            }
+        </div>
     </div>
   )
 }
