@@ -7,6 +7,7 @@ interface Product {
     name: string;
     qtd: number;
     price: number;
+    qtdVendida: number;
 }
 
 export async function POST(request: Request){
@@ -19,12 +20,27 @@ export async function POST(request: Request){
   
       const sale = await prisma.sale.create({
         data: {
-          total,
-          qtdItens: Products.length,
+            total,
+            qtdItens: Products.map((product) => product.qtdVendida).reduce((acc, qtd) => acc + qtd, 0)
         }
       });
+
+      const saleProducts = await Promise.all(Products.map(product =>
+        prisma.saleProduct.create({
+            data: {
+                qtd: product.qtdVendida,
+                product: {
+                    connect: { id: product.id }
+                },
+                sale: {
+                    connect: { id: sale.id }
+                },
+            }
+        })
+      ));
+    
   
-      return NextResponse.json(sale, { status: 201 });
+      return NextResponse.json({ sale, saleProducts }, { status: 201 });
     } catch (error) {
       console.error('Error:', error);
       return NextResponse.json({ message: 'Error saving sale' }, { status: 500 });
@@ -44,4 +60,14 @@ export async function GET(){
       console.error('Error:', error);
       return NextResponse.json({ message: 'Error fetching sales' }, { status: 500 });
     }
+}
+
+export async function DELETE(){
+  try {
+    await prisma.sale.deleteMany();
+    await prisma.saleProduct.deleteMany();
+    return NextResponse.json({ message: 'Sales and Sale-Product deleted' }, { status: 200 });
+  }catch{
+    return NextResponse.json({ message: 'Error deleting sales' }, { status: 500 });
+  }
 }
