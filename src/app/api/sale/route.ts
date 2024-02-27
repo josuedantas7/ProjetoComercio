@@ -64,8 +64,8 @@ export async function GET(){
 
 export async function DELETE(){
   try {
-    await prisma.sale.deleteMany();
     await prisma.saleProduct.deleteMany();
+    await prisma.sale.deleteMany();
     return NextResponse.json({ message: 'Sales and Sale-Product deleted' }, { status: 200 });
   }catch{
     return NextResponse.json({ message: 'Error deleting sales' }, { status: 500 });
