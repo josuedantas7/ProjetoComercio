@@ -4,10 +4,11 @@ import React, { useEffect } from 'react'
 import ButtonDeleteAllReports from '../Button/ButtonDeleteAllReports';
 import { ReportsProps } from '@/app/Interfaces/allInterfaces';
 import { api } from '@/lib/api';
+import Notification from '../Notifier/Notification';
 
 const TableListReports = () => {
 
-    const [reports, setReports] = React.useState<ReportsProps[]>([])
+    const [reports, setReports] = React.useState<ReportsProps[] | null>([])
 
     useEffect(() => {
         async function getAllReports(){
@@ -20,13 +21,11 @@ const TableListReports = () => {
                 }))
                 setReports(response)
             }catch{
-                console.log('Erro ao buscar os relatórios')
+                Notification('error', 'Erro ao buscar os relatórios')
             }
         }
         getAllReports()
     },[])
-
-    console.log(reports)
 
     function formatDate(date: Date) {
         return date.toLocaleDateString('pt-BR')
@@ -38,7 +37,7 @@ const TableListReports = () => {
 
   return (
     <div className='w-full flex flex-col overflow-y-auto max-h-[500px]'>
-        {reports.length > 0 ? (
+        {reports && reports.length > 0 ? (
             <>
                 <div className='flex justify-between font-bold pr-4 pl-3'>
                     <p className='w-1/4'>ID</p>
@@ -60,8 +59,10 @@ const TableListReports = () => {
                         <p className='font-bold'>Valor total: {formatPrice(reports.reduce((acc, report) => acc + report.total, 0))}</p>
                 </div>
             </>
-        ): (
+        ): reports?.length === 0 ? (
             <h1>Não há relatórios</h1>
+        ) : (
+            <h1>Carregando...</h1>
         )}
         <div className='w-full flex justify-center'>
             <ButtonDeleteAllReports/>

@@ -1,6 +1,8 @@
 import { ReportsProps } from '@/app/Interfaces/allInterfaces'
+import { Button } from '@/components/ui/button'
 import prisma from '@/lib/prisma'
 import React from 'react'
+import ButtonDeleteOneReport from '../Button/ButtonDeleteOneReport'
 
 const TableListProductsBySale = async ({reportId} : {reportId : string}) => {
 
@@ -17,11 +19,11 @@ const TableListProductsBySale = async ({reportId} : {reportId : string}) => {
         }
     })
 
+    console.log(report)
+
     function formartPrice(price: number){
         return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(price)
     }
-
-    console.log(report)
 
   return (
     <div className='w-full flex flex-col overflow-y-auto max-h-[500px]'>
@@ -51,6 +53,9 @@ const TableListProductsBySale = async ({reportId} : {reportId : string}) => {
                 <span className='font-bold flex min-[570px]:hidden'>Valor: </span>
                 <span>{report?.total && formartPrice(report?.total)}</span>
             </div>
+        </div>
+        <div className='flex justify-center'>
+            <ButtonDeleteOneReport id={reportId} />
         </div>
     </div>
   )

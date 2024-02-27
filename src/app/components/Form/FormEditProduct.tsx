@@ -37,8 +37,8 @@ const FormEditProduct = ({product} : {product : ProductProps}) => {
                 }
             })
             revalidateTag('get-products')
-        } catch (err) {
-            console.log('Erro ao cadastrar produto', err)
+        } catch{
+            console.log('Erro ao atualizar o produto')
         }
     }
 

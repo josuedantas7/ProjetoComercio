@@ -12,6 +12,7 @@ import {
 import { api } from "@/lib/api"
 
 import { useRouter } from "next/navigation"
+import Notification from "../Notifier/Notification"
 
 export default function ModalDeleteProduct({id} : { id: string }) {
 
@@ -24,11 +25,11 @@ export default function ModalDeleteProduct({id} : { id: string }) {
                     id: id
                 }
             })
-            console.log(response)
             router.replace('/')
             router.refresh()
+            Notification('success', 'Produto deletado com sucesso')
         }catch{
-            console.log('Erro ao deletar produto')
+            Notification('error', 'Erro ao deletar produto')
         }
     }
 

@@ -8,6 +8,7 @@ import InputWithLabel from '../Input/InputWithLabel'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '@/components/ui/input'
 import { revalidateTag } from 'next/cache'
+import Notification from '../Notifier/Notification'
 
 
 
@@ -22,6 +23,8 @@ const FormSearchItem = () => {
     const [listProducts, setListProducts] = useState<ExtendedProductProps[]>([])
     const [valorTotal, setValorTotal] = useState<number>(0)
 
+    const [loading, setLoading] = useState<boolean>(false)
+
     useEffect(() => {
         if (isNaN(qtd)) {
             setQtd(1)
@@ -31,7 +34,6 @@ const FormSearchItem = () => {
 
     async function handleGetItem(e: any){
         e.preventDefault()
-
         try {
             const response = await api.get('/api/product', {
                 params: {
@@ -44,12 +46,13 @@ const FormSearchItem = () => {
             }])
             setCodigo('')
         } catch{
-            console.log('Erro ao buscar produto')
+            Notification('error', 'Produto não encontrado')
         }
     }
 
     async function handleUpdateDataBase(e: any){
         e.preventDefault()
+        setLoading(true)
         try {
             for (let product of listProducts) {
                 const response = await api.put('/api/product', {
@@ -63,11 +66,12 @@ const FormSearchItem = () => {
                 total: valorTotal
             })
 
-            console.log(response)
-
             setListProducts([])
+            Notification('success', 'Venda finalizada com sucesso')
         } catch(err){
-            console.log('Erro ao finalizar venda', err)
+            Notification('error', 'Erro ao finalizar a venda')
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -123,7 +127,7 @@ const FormSearchItem = () => {
             )}
         </div>
         {listProducts.length > 0 && (
-            <Button className='w-full' onClick={handleUpdateDataBase}>Finalizar compras</Button>
+            <Button className='w-full' onClick={handleUpdateDataBase}>{loading ? 'Finalizando compra...' : 'Finalizar compras'}</Button>
         )}
     </>
   )
