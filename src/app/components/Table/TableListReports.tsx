@@ -1,25 +1,32 @@
-import prisma from '@/lib/prisma'
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ButtonDeleteAllReports from '../Button/ButtonDeleteAllReports';
 import { ReportsProps } from '@/app/Interfaces/allInterfaces';
+import { api } from '@/lib/api';
 
-const TableListReports = async () => {
+const TableListReports = () => {
 
-    const reports : ReportsProps[] = await prisma.sale.findMany({
-        orderBy: {
-            createdAt: 'asc'
-        },
-        include: {
-            saleProducts: {
-                include: {
-                    product: true,
-                },
+    const [reports, setReports] = React.useState<ReportsProps[]>([])
+
+    useEffect(() => {
+        async function getAllReports(){
+            try {
+                const response = await api.get('/api/sale').then(response => response.data).then(data => data.map((report: ReportsProps) => {
+                    return {
+                        ...report,
+                        createdAt: new Date(report.createdAt)
+                    }
+                }))
+                setReports(response)
+            }catch{
+                console.log('Erro ao buscar os relatórios')
             }
         }
-    })
+        getAllReports()
+    },[])
 
-     reports.map(report => console.log(report.saleProducts))
+    console.log(reports)
 
     function formatDate(date: Date) {
         return date.toLocaleDateString('pt-BR')
